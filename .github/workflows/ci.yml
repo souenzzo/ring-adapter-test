@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "JAVA_HOME=$JAVA_HOME_25_X64" >> "$GITHUB_ENV"'
+      - uses: actions/checkout@v6.0.2
+      - uses: DeLaGuardo/setup-clojure@13.6.0
+        with:
+          cli: 1.12.4.1618
+      - uses: actions/cache@v5.0.5
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+            .cpcache
+          key: cljdeps-${{ hashFiles('deps.edn') }}
+      - run: clojure -X:ring-jetty-adapter:test
+      - run: clojure -X:http-kit:test
