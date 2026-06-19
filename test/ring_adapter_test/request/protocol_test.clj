@@ -8,10 +8,10 @@
 
 
 (deftest protocol
-  #_(is (= "HTTP/1.1"
-          (-> {:protocol "HTTP/1.1"}
-            api/capture-request
-            :protocol)))
+  (is (= "HTTP/1.1"
+        (-> {:protocol "HTTP/1.1"}
+          api/capture-request
+          :protocol)))
   #_(is (= "HTTP/2.0"
           (-> {:protocol "HTTP/2.0"}
             api/capture-request
