@@ -56,5 +56,4 @@
         (-> {:headers {"cookie" ["a\n" "c\\nd"]}}
           api/capture-request
           :headers
-          (select-keys ["cookie"])
-          (doto clojure.pprint/pprint)))))
+          (select-keys ["cookie"])))))
