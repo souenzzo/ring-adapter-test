@@ -12,10 +12,15 @@
           api/capture-request
           :headers
           (select-keys ["hello"])))))
-#_
+
 (deftest multiple-headers
   (is (= {"hello" "a,b"}
         (-> {:headers {"hello" ["a" "b"]}}
+          api/capture-request
+          :headers
+          (select-keys ["hello"]))))
+  (is (= {"hello" ";,;"}
+        (-> {:headers {"hello" [";" ";"]}}
           api/capture-request
           :headers
           (select-keys ["hello"]))))
@@ -28,5 +33,28 @@
         (-> {:headers {"hello" ["a\n" "c\\nd"]}}
           api/capture-request
           :headers
-          (select-keys ["hello"])
+          (select-keys ["hello"])))))
+
+
+(deftest cookie-multiple-headers
+  (is (= {"cookie" "a; b"}
+        (-> {:headers {"cookie" ["a" "b"]}}
+          api/capture-request
+          :headers
+          (select-keys ["cookie"]))))
+  (is (= {"cookie" ",; ,"}
+        (-> {:headers {"cookie" ["," ","]}}
+          api/capture-request
+          :headers
+          (select-keys ["cookie"]))))
+  (is (= {"cookie" ";; ;"}
+        (-> {:headers {"cookie" [";" ";"]}}
+          api/capture-request
+          :headers
+          (select-keys ["cookie"]))))
+  (is (= {"cookie" "a; c\\nd"}
+        (-> {:headers {"cookie" ["a\n" "c\\nd"]}}
+          api/capture-request
+          :headers
+          (select-keys ["cookie"])
           (doto clojure.pprint/pprint)))))
