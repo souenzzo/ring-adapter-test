@@ -28,49 +28,50 @@
     :as   ring-request}
    response-body-handler]
   (with-open [_http-server (open ring-handler
-                             {})
-              http-client (HttpClient/newHttpClient)]
-    (let [http-response (.send http-client
-                          (proxy [HttpRequest] []
-                            (method [] (-> request-method name string/upper-case))
-                            (timeout [] (Optional/of (Duration/ofSeconds 1)))
-                            (expectContinue [] false)
-                            (bodyPublisher [] (if (contains? ring-request :body)
-                                                (Optional/of body)
-                                                (Optional/empty)))
-                            (version [] (if (contains? ring-request :protocol)
-                                          (Optional/of
-                                            (case protocol
-                                              "HTTP/1.1" HttpClient$Version/HTTP_1_1
-                                              "HTTP/2.0" HttpClient$Version/HTTP_2))
-                                          (Optional/empty)))
-                            (headers [] (HttpHeaders/of headers
-                                          (constantly true)))
-                            (uri [] (URI. "http" nil "0" 8080 uri query-string nil)))
-                          response-body-handler)]
-      {:body    (.body http-response)
-       :headers (into {}
-                  (map (fn [[k vs]]
-                         [k (if (next vs)
-                              (vec vs)
-                              (first vs))]))
-                  (.map (.headers http-response)))
-       :status  (.statusCode http-response)})))
+                             {})]
+    (let [http-client (HttpClient/newHttpClient)]
+      (try
+        (let [http-response (.send http-client
+                              (proxy [HttpRequest] []
+                                (method [] (-> request-method name string/upper-case))
+                                (timeout [] (Optional/of (Duration/ofSeconds 1)))
+                                (expectContinue [] false)
+                                (bodyPublisher [] (if (contains? ring-request :body)
+                                                    (Optional/of body)
+                                                    (Optional/empty)))
+                                (version [] (if (contains? ring-request :protocol)
+                                              (Optional/of
+                                                (case protocol
+                                                  "HTTP/1.1" HttpClient$Version/HTTP_1_1
+                                                  "HTTP/2.0" HttpClient$Version/HTTP_2))
+                                              (Optional/empty)))
+                                (headers [] (HttpHeaders/of headers
+                                              (constantly true)))
+                                (uri [] (URI. "http" nil "0" 8080 uri query-string nil)))
+                              response-body-handler)]
+          {:body    (.body http-response)
+           :headers (into {}
+                      (map (fn [[k vs]]
+                             [k (if (next vs)
+                                  (vec vs)
+                                  (first vs))]))
+                      (.map (.headers http-response)))
+           :status  (.statusCode http-response)})
+        (finally
+          (when (instance? AutoCloseable http-client)
+            (AutoCloseable/.close http-client)))))))
 
 (defn capture-request
   ([ring-request]
    (capture-request ring-request identity))
-  ([{:keys [request-method body protocol headers uri query-string]
-     :or   {request-method :get
-            headers        {}}
-     :as   ring-request} on-body]
+  ([ring-request on-body]
    (let [*request (promise)
          {:keys [status]
           :as   ring-response} (start-stop-ring (fn [ring-request]
                                                   (deliver *request (if (contains? ring-request :body)
                                                                       (update ring-request :body on-body)
                                                                       ring-request))
-                                                  {:status 202})
+                                                  {:status 204})
                                  ring-request
                                  (HttpResponse$BodyHandlers/discarding))]
      (when-not (== status 204)
