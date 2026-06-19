@@ -71,7 +71,7 @@
                                                   (deliver *request (if (contains? ring-request :body)
                                                                       (update ring-request :body on-body)
                                                                       ring-request))
-                                                  {:status 202})
+                                                  {:status 204})
                                  ring-request
                                  (HttpResponse$BodyHandlers/discarding))]
      (when-not (== status 204)
