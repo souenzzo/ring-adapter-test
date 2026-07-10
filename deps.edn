@@ -1,17 +1,18 @@
 {:paths   ["src" "test"]
  :deps    {org.clojure/clojure          {:mvn/version "1.12.5"}
-           org.clojure/test.check       {:mvn/version "1.1.3"}
-           io.pedestal/pedestal.service {:mvn/version "0.8.2-beta-9"}}
+           org.clojure/test.check       {:mvn/version "1.1.3"}}
  :aliases {:ring-jetty-adapter {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.ring-jetty-adapter/open"
                                              "-Dorg.slf4j.simpleLogger.log.org.eclipse.jetty.server.Server=warn"
                                              "-Dorg.slf4j.simpleLogger.log.org.eclipse.jetty.server.AbstractConnector=warn"
                                              "-Dorg.slf4j.simpleLogger.log.org.eclipse.jetty.ee10.servlet.ServletContextHandler=warn"
                                              "-Dorg.slf4j.simpleLogger.log.org.eclipse.jetty.server.handler.ContextHandler=warn"
                                              "-Dorg.slf4j.simpleLogger.log.org.eclipse.jetty.session.DefaultSessionIdManager=warn"]
-                                :extra-deps {ring/ring-jetty-adapter {:mvn/version "1.15.4"}
+                                :extra-deps {ring/ring-jetty-adapter {:mvn/version "1.15.5"}
                                              org.slf4j/slf4j-simple  {:mvn/version "2.0.18"}}}
            :http-kit           {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.http-kit/open"]
                                 :extra-deps {http-kit/http-kit {:mvn/version "2.8.1"}}}
+           :capra              {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.capra/open"]
+                                :extra-deps {dev.weavejester/capra {:mvn/version "0.1.0"}}}
            :test               {:extra-paths ["test"]
                                 :jvm-opts    ["-XX:-OmitStackTraceInFastThrow"
                                               "-Djdk.httpclient.allowRestrictedHeaders=host"

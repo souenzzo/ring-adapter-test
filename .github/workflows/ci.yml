@@ -23,3 +23,4 @@ jobs:
           key: cljdeps-${{ hashFiles('deps.edn') }}
       - run: clojure -X:ring-jetty-adapter:test
       - run: clojure -X:http-kit:test
+      - run: clojure -X:capra:test
