@@ -27,9 +27,10 @@
            headers        {}}
     :as   ring-request}
    response-body-handler]
-  (with-open [_http-server (open ring-handler
-                             {})]
-    (let [http-client (HttpClient/newHttpClient)]
+  (with-open [http-server (open ring-handler
+                            {})]
+    (let [server-port (-> http-server meta (:server-port 8080))
+          http-client (HttpClient/newHttpClient)]
       (try
         (let [http-response (.send http-client
                               (proxy [HttpRequest] []
@@ -47,7 +48,7 @@
                                               (Optional/empty)))
                                 (headers [] (HttpHeaders/of headers
                                               (constantly true)))
-                                (uri [] (URI. "http" nil "0" 8080 uri query-string nil)))
+                                (uri [] (URI. "http" nil "0" server-port uri query-string nil)))
                               response-body-handler)]
           {:body    (.body http-response)
            :headers (into {}
