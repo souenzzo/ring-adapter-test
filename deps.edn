@@ -12,7 +12,7 @@
            :http-kit           {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.http-kit/open"]
                                 :extra-deps {http-kit/http-kit {:mvn/version "2.8.1"}}}
            :capra              {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.capra/open"]
-                                :extra-deps {dev.weavejester/capra {:mvn/version "0.1.2"}}}
+                                :extra-deps {dev.weavejester/capra {:mvn/version "0.1.4"}}}
            :test               {:extra-paths ["test"]
                                 :jvm-opts    ["-XX:-OmitStackTraceInFastThrow"
                                               "-Djdk.httpclient.allowRestrictedHeaders=host"
