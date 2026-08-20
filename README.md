@@ -9,4 +9,5 @@ behavioral consistency across different adapters implementations.
 clojure -X:ring-jetty-adapter:test
 clojure -X:http-kit:test
 clojure -X:capra:test
+clojure -X:ring-jdk-adapter:test
 ```

@@ -7,7 +7,8 @@
 (comment
   (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.http-kit/open")
   (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.ring-jetty-adapter/open")
-  (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.capra/open"))
+  (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.capra/open")
+  (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.ring-jdk-adapter/open"))
 
 (deftest query-string
   (is (= "hello"
