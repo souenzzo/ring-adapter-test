@@ -10,10 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: 'echo "JAVA_HOME=$JAVA_HOME_25_X64" >> "$GITHUB_ENV"'
+      - run: 'echo "PATH=$JAVA_HOME_25_X64/bin:$PATH" >> "$GITHUB_ENV"'
       - uses: actions/checkout@v6.0.2
-      - uses: DeLaGuardo/setup-clojure@13.6.0
+      - uses: DeLaGuardo/setup-clojure@13.7.0
         with:
-          cli: 1.12.4.1618
+          cli: 1.12.6.1673
       - uses: actions/cache@v5.0.5
         with:
           path: |
