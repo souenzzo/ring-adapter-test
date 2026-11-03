@@ -3,6 +3,13 @@
             [ring-adapter-test.api :as api]))
 
 
+(comment
+  (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.http-kit/open")
+  (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.ring-jetty-adapter/open")
+  (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.enso/open")
+  (System/setProperty "ring-adapter-test.api/open" "ring-adapter-test.ring-jdk-adapter/open"))
+
+
 (deftest status-204
   (is (= 204
         (-> (constantly {:status 204})

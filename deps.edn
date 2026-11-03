@@ -1,5 +1,5 @@
 {:paths   ["src" "test"]
- :deps    {org.clojure/clojure    {:mvn/version "1.12.5"}
+ :deps    {org.clojure/clojure    {:mvn/version "1.12.6"}
            org.clojure/test.check {:mvn/version "1.1.3"}}
  :aliases {:ring-jetty-adapter {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.ring-jetty-adapter/open"
                                              "-Dorg.slf4j.simpleLogger.log.org.eclipse.jetty.server.Server=warn"
@@ -13,6 +13,9 @@
                                 :extra-deps {http-kit/http-kit {:mvn/version "2.8.1"}}}
            :capra              {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.capra/open"]
                                 :extra-deps {dev.weavejester/capra {:mvn/version "0.1.4"}}}
+           :enso               {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.enso/open"]
+                                :extra-deps {com.s-exp/enso             {:mvn/version "1.0.0-beta107"}
+                                             com.s-exp/enso$linux-amd64 {:mvn/version "1.0.0-beta107"}}}
            :ring-jdk-adapter   {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.ring-jdk-adapter/open"]
                                 :extra-deps {com.github.igrishaev/ring-jdk-adapter {:mvn/version "0.1.2"}}}
            :test               {:extra-paths ["test"]

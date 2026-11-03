@@ -25,3 +25,4 @@ jobs:
       - run: clojure -X:http-kit:test
       - run: clojure -X:capra:test
       - run: clojure -X:ring-jdk-adapter:test
+      - run: clojure -X:enso:test
