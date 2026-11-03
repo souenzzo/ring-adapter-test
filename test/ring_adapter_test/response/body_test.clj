@@ -41,7 +41,7 @@
           (api/simple-request {} (HttpResponse$BodyHandlers/ofString))
           :body))))
 
-(comment deftest value-bytes
+(deftest value-bytes
   (is (= "bytes"
         (-> (constantly {:body   (.getBytes "bytes")
                          :status 200})
