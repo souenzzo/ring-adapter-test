@@ -13,6 +13,9 @@
                                 :extra-deps {http-kit/http-kit {:mvn/version "2.8.1"}}}
            :capra              {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.capra/open"]
                                 :extra-deps {dev.weavejester/capra {:mvn/version "0.1.4"}}}
+           :enso               {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.enso/open"]
+                                :extra-deps {com.s-exp/enso             {:mvn/version "1.0.0-beta107"}
+                                             com.s-exp/enso$linux-amd64 {:mvn/version "1.0.0-beta107"}}}
            :ring-jdk-adapter   {:jvm-opts   ["-Dring-adapter-test.api/open=ring-adapter-test.ring-jdk-adapter/open"]
                                 :extra-deps {com.github.igrishaev/ring-jdk-adapter {:mvn/version "0.1.5"}}}
            :test               {:extra-paths ["test"]

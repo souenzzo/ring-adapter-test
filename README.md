@@ -10,4 +10,5 @@ clojure -X:ring-jetty-adapter:test
 clojure -X:http-kit:test
 clojure -X:capra:test
 clojure -X:ring-jdk-adapter:test
+clojure -X:enso:test
 ```
