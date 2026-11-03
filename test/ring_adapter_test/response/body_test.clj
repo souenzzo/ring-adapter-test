@@ -58,7 +58,7 @@
 
 (deftest io-file
   (with-open [p (tempfile)]
-    (let [f (.toFile Path p)]
+    (let [f (.toFile ^Path p)]
       (spit f "file")
       (is (= "file"
             (-> (constantly {:body   f
